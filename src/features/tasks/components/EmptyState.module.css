@@ -1,0 +1,27 @@
+.card {
+  padding: var(--space-8) var(--space-4);
+  text-align: center;
+  border-radius: var(--radius-medium);
+  border: var(--border-width-default) dashed var(--color-border);
+}
+
+.title {
+  font-family: var(--font-body);
+  font-size: var(--text-body-strong-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.description {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-secondary);
+}
+
+.action {
+  margin-top: var(--space-4);
+  display: flex;
+  justify-content: center;
+}

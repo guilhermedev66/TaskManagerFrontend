@@ -1,0 +1,68 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.input {
+  width: 100%;
+  height: var(--field-height-desktop);
+  padding: 10px 40px 10px 14px;
+  border-radius: var(--radius-small);
+  border: var(--border-width-default) solid var(--color-border-strong);
+  background: var(--color-field-background);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-primary);
+}
+
+.input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.clearButton {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: var(--hit-target-desktop);
+  height: var(--hit-target-desktop);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-small);
+  color: var(--color-text-secondary);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.clearButton:hover {
+  color: var(--color-text-primary);
+}
+
+@media (max-width: 767px) {
+  .wrapper {
+    max-width: none;
+  }
+  .input {
+    height: var(--field-height-mobile);
+  }
+  .clearButton {
+    width: var(--touch-target-mobile);
+    height: var(--touch-target-mobile);
+  }
+}
