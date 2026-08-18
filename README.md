@@ -131,6 +131,21 @@ adequados em mobile.
 
 [Abrir o arquivo de design no Figma](https://www.figma.com/design/DJ5kcPx19Bzp0kQyjR1kPB/TaskManagerAPI--Frontend)
 
+## Deploy
+
+O projeto está preparado para deploy na Vercel. O arquivo `vercel.json` redireciona as rotas da
+SPA para `index.html`, permitindo abrir diretamente `/login`, `/register` e `/tasks`.
+
+Antes de publicar:
+
+1. publique a API em uma origem HTTPS com persistência para o SQLite;
+2. configure `VITE_API_URL` na Vercel com a origem pública da API;
+3. inclua a origem do frontend em `Cors:AllowedOrigins` no backend;
+4. execute um novo deploy após salvar a variável de ambiente.
+
+O frontend não contém segredos. A URL da API é incorporada ao bundle durante o build e pode ser
+inspecionada pelo navegador, como esperado para uma SPA.
+
 ## Decisões de escopo
 
 - frontend e backend permanecem em repositórios independentes;
