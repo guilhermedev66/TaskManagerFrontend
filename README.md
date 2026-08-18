@@ -5,6 +5,11 @@ SPA responsiva para gerenciamento de tarefas, construída em React e integrada �
 de autenticação, consulta e manutenção de tarefas, com atenção especial a acessibilidade, estados
 de falha e consistência de sessão.
 
+## Ambiente publicado
+
+- Frontend: https://taskmanagerfrontend-lac.vercel.app (Vercel)
+- API: https://taskmanagerapi-guilherme.fly.dev (Fly.io)
+
 ## Funcionalidades
 
 - cadastro, login, logout e restauração silenciosa da sessão;
@@ -133,10 +138,11 @@ adequados em mobile.
 
 ## Deploy
 
-O projeto está preparado para deploy na Vercel. O arquivo `vercel.json` redireciona as rotas da
-SPA para `index.html`, permitindo abrir diretamente `/login`, `/register` e `/tasks`.
+Publicado na Vercel. O arquivo `vercel.json` redireciona as rotas da SPA para `index.html`,
+permitindo abrir diretamente `/login`, `/register` e `/tasks`. `VITE_API_URL` aponta para a origem
+pública da API no Fly.io, e essa origem está liberada em `Cors:AllowedOrigins` no backend.
 
-Antes de publicar:
+Para publicar uma nova instância:
 
 1. publique a API em uma origem HTTPS com persistência para o SQLite;
 2. configure `VITE_API_URL` na Vercel com a origem pública da API;
