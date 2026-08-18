@@ -31,15 +31,16 @@ export const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
               aria-invalid={invalid || undefined}
               {...rest}
             />
-            <button
-              type="button"
-              className={styles.toggle}
-              disabled={disabled}
-              onClick={() => setVisible((current) => !current)}
-              aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
-            >
-              {visible ? 'Ocultar' : 'Mostrar'}
-            </button>
+            {disabled ? null : (
+              <button
+                type="button"
+                className={styles.toggle}
+                onClick={() => setVisible((current) => !current)}
+                aria-label={visible ? 'Ocultar senha' : 'Mostrar senha'}
+              >
+                {visible ? 'Ocultar' : 'Mostrar'}
+              </button>
+            )}
           </div>
         )}
       </FieldShell>

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './app/App.tsx'
+import { AuthProvider } from './auth/AuthProvider.tsx'
 import './styles/reset.css'
 import './styles/tokens.css'
 /* Só o subset "latin" (unicode.json do Fontsource: U+0000-00FF, cobre todo o Latin-1
@@ -19,6 +20,8 @@ import './styles/globals.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
 )

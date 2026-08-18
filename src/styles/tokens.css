@@ -35,6 +35,18 @@
   --color-danger-ghost-hover: #faeded; /* Button/danger-ghost hover, fundo tintado */
   --color-border-hairline: rgba(31, 27, 22, 0.1); /* "default" border — header/nav */
 
+  /* Alert (03 — Auth, componente reaproveitado em States) — tons derivados de danger/warning/
+     success. Nota: o node de referência do alerta de warning usa a barra #a17323, 1 dígito
+     diferente do --color-warning (#a17423) já aprovado na Fase 2; mantido --color-warning
+     como está (fora do escopo desta fase corrigir um token já commitado), divergência mínima
+     registrada aqui. */
+  --color-alert-danger-bg: rgba(178, 59, 59, 0.08);
+  --color-alert-danger-border: rgba(178, 59, 59, 0.35);
+  --color-alert-warning-bg: rgba(161, 115, 35, 0.08);
+  --color-alert-warning-border: rgba(161, 115, 35, 0.35);
+  --color-alert-success-bg: rgba(63, 122, 82, 0.08);
+  --color-alert-success-border: rgba(63, 122, 82, 0.35);
+
   /* ── Tipografia — famílias ── */
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
