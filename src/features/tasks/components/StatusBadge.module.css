@@ -1,0 +1,20 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-family: var(--font-body);
+  font-size: var(--text-helper-size);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.pending {
+  background: var(--color-alert-warning-bg);
+  color: var(--color-warning);
+}
+
+.completed {
+  background: var(--color-alert-success-bg);
+  color: var(--color-success);
+}

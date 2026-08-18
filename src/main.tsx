@@ -1,7 +1,9 @@
+import { QueryClientProvider } from '@tanstack/react-query'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './app/App.tsx'
 import { AuthProvider } from './auth/AuthProvider.tsx'
+import { queryClient } from './lib/queryClient.ts'
 import './styles/reset.css'
 import './styles/tokens.css'
 /* Só o subset "latin" (unicode.json do Fontsource: U+0000-00FF, cobre todo o Latin-1
@@ -10,6 +12,7 @@ import './styles/tokens.css'
    por peso do Fontsource sem sufixo de subset declaram @font-face para TODOS os scripts
    (cyrillic/greek/vietnamese/etc.) sem unicode-range compartilhado corretamente — usar
    só "latin" evita esse peso morto. */
+import '@fontsource/fraunces/latin-400.css'
 import '@fontsource/fraunces/latin-600.css'
 import '@fontsource/ibm-plex-sans/latin-400.css'
 import '@fontsource/ibm-plex-sans/latin-500.css'
@@ -20,8 +23,10 @@ import './styles/globals.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 )

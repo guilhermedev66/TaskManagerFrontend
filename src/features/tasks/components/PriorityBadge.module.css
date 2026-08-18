@@ -1,0 +1,37 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-family: var(--font-body);
+  font-size: var(--text-helper-size);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.sign {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.low {
+  color: var(--color-priority-low);
+}
+.low .sign {
+  background: var(--color-priority-low);
+}
+
+.medium {
+  color: var(--color-priority-medium);
+}
+.medium .sign {
+  background: var(--color-priority-medium);
+}
+
+.high {
+  color: var(--color-priority-high);
+}
+.high .sign {
+  background: var(--color-priority-high);
+}

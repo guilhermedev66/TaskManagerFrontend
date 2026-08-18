@@ -1,0 +1,147 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.newTaskButton {
+  align-self: flex-start;
+}
+
+.pageMessage {
+  margin-top: var(--space-4);
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-label-size);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--text-label-tracking);
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.heading {
+  margin: var(--space-1) 0 0;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-regular);
+  font-size: 24px;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  margin: var(--space-2) 0 0;
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-secondary);
+  min-height: 1.5em;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.desktopControls {
+  display: none;
+}
+
+.mobileFilterButton {
+  height: var(--touch-target-mobile);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-small);
+  border: var(--border-width-default) solid var(--color-border-strong);
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.clearAll {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  cursor: pointer;
+  min-height: var(--touch-target-mobile);
+}
+
+.listRegion {
+  margin-top: var(--space-6);
+}
+
+.updating {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-helper-size);
+  color: var(--color-text-secondary);
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.retryButton {
+  height: var(--touch-target-mobile);
+  padding: 0 var(--space-4);
+  border-radius: var(--radius-small);
+  border: var(--border-width-default) solid var(--color-border-strong);
+  background: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-primary);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .newTaskButton {
+    align-self: auto;
+    flex-shrink: 0;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .desktopControls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .mobileFilterButton {
+    display: none;
+  }
+}
