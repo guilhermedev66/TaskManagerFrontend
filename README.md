@@ -1,58 +1,148 @@
-# TaskManager (frontend)
+# TaskManager — Frontend
 
-Frontend SPA em React para o [TaskManagerAPI](https://github.com/guilhermedev66/TaskManagerAPI) — consome a API REST de gerenciamento de tarefas com autenticação JWT.
+SPA responsiva para gerenciamento de tarefas, construída em React e integrada à
+[TaskManagerAPI](https://github.com/guilhermedev66/TaskManagerAPI). O projeto cobre o fluxo completo
+de autenticação, consulta e manutenção de tarefas, com atenção especial a acessibilidade, estados
+de falha e consistência de sessão.
 
-> **Status:** foundations de design, componentes base e cliente HTTP implementados. Ainda não há telas, autenticação (login/cadastro), gerenciamento de sessão ou rotas — isso pertence às próximas fases.
+## Funcionalidades
 
-## Stack atual
+- cadastro, login, logout e restauração silenciosa da sessão;
+- rotação coordenada de refresh token, sem refreshes concorrentes;
+- rotas públicas e protegidas;
+- listagem paginada com busca, filtro e oito opções de ordenação;
+- filtros refletidos na URL e busca com debounce;
+- criação e edição em diálogo responsivo;
+- conclusão e reabertura otimistas, com rollback em falha;
+- exclusão com confirmação;
+- estados de carregamento, vazio, ausência de resultados, conexão, `404`, `429` e sessão expirada;
+- layout adaptado para desktop e mobile, incluindo bottom sheet de filtros;
+- navegação por teclado, foco visível e gerenciamento de foco em diálogos.
 
-- React 19 + TypeScript
-- Vite
-- ESLint + Prettier
-- Vitest + React Testing Library
-- MSW (mocks de rede nos testes do cliente HTTP)
+## Stack
 
-## Requisitos
+- React 19 e TypeScript;
+- Vite;
+- React Router;
+- TanStack Query;
+- React Hook Form e Zod;
+- CSS Modules e design tokens;
+- Vitest, React Testing Library e MSW;
+- ESLint e Prettier.
 
-- Node.js LTS (testado com Node 24)
-- npm
+## Arquitetura
 
-## Instalação
+O código é organizado por responsabilidade, sem camadas artificiais:
+
+```text
+src/
+├── app/          # rotas, providers e shell autenticado
+├── auth/         # sessão, tokens e refresh silencioso
+├── components/   # componentes básicos reutilizáveis
+├── features/
+│   ├── auth/     # Login e Cadastro
+│   └── tasks/    # dashboard, consultas, mutações e componentes de tarefa
+├── lib/          # cliente HTTP, QueryClient e hooks transversais
+├── styles/       # tokens, tipografia e estilos globais
+├── test/         # configuração e servidor MSW
+└── types/        # contratos TypeScript equivalentes aos DTOs da API
+```
+
+O estado de servidor fica no TanStack Query; sessão fica no `AuthProvider`; filtros ficam na URL;
+rascunhos de formulário e de interface permanecem locais aos respectivos componentes.
+
+## Autenticação
+
+O access token existe somente em memória. O refresh token fica em `sessionStorage` porque o
+contrato atual da API o devolve no corpo JSON; portanto, ele ainda pode ser lido por JavaScript em
+caso de XSS. Uma evolução futura seria o backend emitir o refresh token em cookie `HttpOnly`,
+`Secure` e com `SameSite` apropriado.
+
+O frontend coordena refreshes simultâneos em uma única operação. Respostas obsoletas são
+descartadas quando logout ou novo login substituem a sessão. Somente `401` invalida a sessão;
+falhas de conexão, `5xx` e `429` preservam o refresh token e oferecem recuperação.
+
+## Executando localmente
+
+### Requisitos
+
+- Node.js LTS (desenvolvido com Node 24);
+- npm;
+- [TaskManagerAPI](https://github.com/guilhermedev66/TaskManagerAPI) executando localmente.
+
+### Configuração
 
 ```bash
+git clone https://github.com/guilhermedev66/TaskManagerFrontend.git
+cd TaskManagerFrontend
 npm install
 ```
 
-## Comandos disponíveis
+Copie `.env.example` para `.env`:
 
-| Comando                | Descrição                                |
-| ---------------------- | ---------------------------------------- |
-| `npm run dev`          | Sobe o servidor de desenvolvimento       |
-| `npm run build`        | Typecheck + build de produção            |
-| `npm run preview`      | Serve o build de produção localmente     |
-| `npm run lint`         | Roda o ESLint                            |
-| `npm run typecheck`    | Verifica tipos sem gerar arquivos        |
-| `npm run format`       | Formata os arquivos com Prettier         |
-| `npm run format:check` | Verifica formatação sem alterar arquivos |
-| `npm run test`         | Roda a suíte de testes uma vez           |
-| `npm run test:watch`   | Roda os testes em modo watch             |
-
-## Variáveis de ambiente
-
-Copie `.env.example` para `.env` e ajuste conforme necessário:
-
-```
+```env
 VITE_API_URL=http://localhost:5078
 ```
 
-`VITE_API_URL` é a URL base da TaskManagerAPI e agora é **obrigatória**: o cliente HTTP (`src/lib/api/apiClient.ts`) valida essa variável no primeiro uso e lança um erro claro se estiver ausente, relativa ou com protocolo diferente de `http`/`https`. Sem `.env`, qualquer chamada à API falha imediatamente com essa mensagem.
+`VITE_API_URL` deve ser uma origem HTTP/HTTPS absoluta, sem credenciais, query string, fragmento ou
+caminho adicional.
 
-## Relação com o TaskManagerAPI
+Inicie o frontend:
 
-Este é um repositório separado do backend, versionado de forma independente. O backend é esperado em `http://localhost:5078` durante o desenvolvimento local (padrão em `.env.example`) e expõe CORS configurável para permitir chamadas deste frontend (`http://localhost:5173`).
+```bash
+npm run dev
+```
 
-## Cliente HTTP
+A aplicação estará disponível em `http://localhost:5173`. O backend deve liberar essa origem na
+configuração de CORS.
 
-`src/lib/api/apiClient.ts` expõe `apiRequest<T>(path, options)`, um wrapper fino sobre `fetch` nativo (sem Axios/ky). Ele monta a URL a partir de `VITE_API_URL`, define `Accept`/`Content-Type`, envia `Authorization: Bearer` quando um token é passado, encaminha `AbortSignal`, trata `204 No Content` e converte respostas de erro em `ApiError` (com `status`, `title`, `detail`, `validationErrors` e `retryAfterSeconds` normalizado a partir do header `Retry-After`). Falhas de rede viram `ConnectionError`; erros de configuração viram `ConfigurationError`. Ele **não** implementa refresh de token, retry automático ou timeout — isso é escopo de uma fase futura (autenticação).
+## Scripts
 
-Os tipos do contrato (`src/types/{auth,tasks,problemDetails}.ts`) refletem o JSON real da API: `priority` é numérico, datas HTTP são `string`, e `TaskItem` não expõe `userId` no JSON (o backend o marca com `[JsonIgnore]`).
+| Comando                | Finalidade                       |
+| ---------------------- | -------------------------------- |
+| `npm run dev`          | servidor de desenvolvimento      |
+| `npm run build`        | typecheck e build de produção    |
+| `npm run preview`      | prévia local do build            |
+| `npm run lint`         | análise estática com ESLint      |
+| `npm run typecheck`    | verificação de tipos sem emissão |
+| `npm run format`       | formatação com Prettier          |
+| `npm run format:check` | validação da formatação          |
+| `npm run test`         | suíte de testes com Vitest       |
+| `npm run test:watch`   | testes em modo de observação     |
+
+## Qualidade
+
+A suíte automatizada cobre componentes, formulários, cliente HTTP, autenticação, concorrência de
+refresh, filtros, paginação e mutações com rollback. O pipeline executa:
+
+```text
+format:check → lint → typecheck → test → build
+```
+
+As integrações HTTP são exercitadas com MSW. O fluxo completo também foi validado localmente
+contra a API real com dados fictícios.
+
+## Design e acessibilidade
+
+O design foi desenvolvido no Figma antes da implementação e traduzido para tokens CSS e
+componentes reutilizáveis. A interface usa HTML nativo sempre que possível, landmarks, labels
+associadas, mensagens anunciáveis, foco preso em diálogos, retorno de foco e alvos de toque
+adequados em mobile.
+
+[Abrir o arquivo de design no Figma](https://www.figma.com/design/DJ5kcPx19Bzp0kQyjR1kPB/TaskManagerAPI--Frontend)
+
+## Decisões de escopo
+
+- frontend e backend permanecem em repositórios independentes;
+- não há Redux ou outra store global: o estado atual não justifica essa dependência;
+- criação, edição e exclusão aguardam confirmação do servidor;
+- somente conclusão/reabertura usa atualização otimista;
+- a aplicação não reordena páginas localmente nem tenta corrigir respostas do backend;
+- Playwright ficou fora da primeira versão: a cobertura atual e a validação real oferecem melhor
+  custo-benefício para este escopo. Ele pode ser adicionado quando houver ambiente de integração
+  hospedado e estável.
+
+## Repositórios
+
+- Frontend: [TaskManagerFrontend](https://github.com/guilhermedev66/TaskManagerFrontend)
+- Backend: [TaskManagerAPI](https://github.com/guilhermedev66/TaskManagerAPI)
