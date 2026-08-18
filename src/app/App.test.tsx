@@ -57,7 +57,7 @@ describe('App', () => {
     await user.type(screen.getByLabelText('Senha'), 'segredo123')
     await user.click(screen.getByRole('button', { name: 'Entrar' }))
 
-    expect(await screen.findByRole('heading', { name: 'Autenticado' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'Sair' }))
 
@@ -84,7 +84,7 @@ describe('App', () => {
     await user.type(screen.getByLabelText('Usuário'), 'guilherme')
     await user.type(screen.getByLabelText('Senha'), 'segredo123')
     await user.click(screen.getByRole('button', { name: 'Entrar' }))
-    await screen.findByRole('heading', { name: 'Autenticado' })
+    await screen.findByRole('heading', { name: 'Tarefas' })
     firstRender.unmount()
 
     // Simula o usuário navegando manualmente pra /register enquanto já tem sessão ativa
@@ -97,6 +97,36 @@ describe('App', () => {
       </AuthProvider>,
     )
 
-    expect(await screen.findByRole('heading', { name: 'Autenticado' })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()
+  })
+
+  it('ends the session locally and redirects to Login when the logout endpoint fails by connection', async () => {
+    let logoutCalls = 0
+    server.use(
+      http.post(`${BASE_URL}/api/login`, () =>
+        HttpResponse.json({ token: 'access-token', refreshToken: 'refresh-token' }),
+      ),
+      http.post(`${BASE_URL}/api/logout`, () => {
+        logoutCalls += 1
+        return HttpResponse.error()
+      }),
+    )
+
+    const user = userEvent.setup()
+    renderAppAt('/login')
+
+    await screen.findByRole('heading', { name: 'Entrar' })
+    await user.type(screen.getByLabelText('Usuário'), 'guilherme')
+    await user.type(screen.getByLabelText('Senha'), 'segredo123')
+    await user.click(screen.getByRole('button', { name: 'Entrar' }))
+
+    expect(await screen.findByRole('heading', { name: 'Tarefas' })).toBeInTheDocument()
+
+    await user.click(screen.getByRole('button', { name: 'Sair' }))
+
+    // ProtectedRoute só mostra o Login de novo se o status realmente virou anonymous — não é só
+    // o botão Sair sumindo, é a rota protegida reagindo à sessão local encerrada de verdade.
+    expect(await screen.findByRole('heading', { name: 'Entrar' })).toBeInTheDocument()
+    expect(logoutCalls).toBe(1)
   })
 })

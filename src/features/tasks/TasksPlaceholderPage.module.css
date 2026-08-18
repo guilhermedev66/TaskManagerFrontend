@@ -2,18 +2,5 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-5);
-}
-
-.banner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
   gap: var(--space-3);
-  padding: var(--space-4);
-  border-radius: var(--radius-small);
-  background: var(--color-field-background);
-  border: var(--border-width-default) solid var(--color-border-strong);
 }

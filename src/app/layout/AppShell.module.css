@@ -1,0 +1,130 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.nav {
+  flex-shrink: 0;
+  width: 100%;
+  background: var(--color-background);
+  border-bottom: var(--border-width-default) solid var(--color-border);
+}
+
+/* Container fluido: a largura já vem "viewport menos as duas margens do breakpoint" via calc(),
+   e max-width trava em 1120px (o teto útil do Foundations) quando o viewport for grande o
+   bastante — nesse ponto margin-inline:auto centraliza sozinho, sem precisar de mais nenhuma
+   conta. Importante: esta caixa NUNCA tem padding horizontal — com box-sizing:border-box
+   (reset global), padding aqui comeria a própria largura de 1120px calculada, entregando menos
+   conteúdo útil do que o documentado (era exatamente o bug do checkpoint anterior). Padding
+   fica só vertical (padding-block), e a margem lateral vira 100% responsabilidade do calc(). */
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: calc(100% - 32px); /* 320–389px: margem 16px de cada lado */
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding-block: var(--space-3);
+}
+
+.wordmark {
+  min-width: 0;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  /* 15px no mobile é o valor medido em 01 — Components (node 28:25, Nav/mobile) — menor que a
+     escala h2 (18px) usada no desktop, de propósito, para caber com folga em 320px. */
+  font-size: 15px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* "Sair" no Figma (nós 28:20/28:21) é texto simples colorido, sem chrome de botão — reaproveita
+   o componente Button (disabled/aria-busy/spinner sem redimensionar já vêm de lá) e só sobrescreve
+   a aparência pra bater com o design, em vez de duplicar a lógica de loading num botão à parte. */
+.logoutButton {
+  height: auto;
+  min-width: var(--touch-target-mobile);
+  min-height: var(--touch-target-mobile);
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-primary);
+  font-size: var(--text-body-strong-size);
+}
+.logoutButton:hover:not(:disabled) {
+  background: transparent;
+  text-decoration: underline;
+}
+.logoutButton:active:not(:disabled) {
+  background: transparent;
+}
+.logoutButton:disabled {
+  background: transparent;
+  color: var(--color-disabled);
+}
+
+.main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Mesmo mecanismo de largura de .navInner (ver comentário acima) — nav e conteúdo sempre
+   compartilham a mesma margem lateral efetiva em qualquer viewport. Espaçamento vertical segue
+   a anatomia documentada da página: mobile usa a escala já aprovada (--space-6, 24px
+   topo/base); desktop/tablet (≥768px) usa 40px no topo / 64px na base. */
+.mainInner {
+  width: calc(100% - 32px);
+  max-width: var(--content-max-width);
+  margin-inline: auto;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-6);
+}
+
+@media (min-width: 390px) {
+  /* 390–767px: margem 20px de cada lado */
+  .navInner {
+    width: calc(100% - 40px);
+  }
+  .mainInner {
+    width: calc(100% - 40px);
+  }
+}
+
+@media (min-width: 768px) {
+  /* 768–1439px: margem 32px de cada lado. Também o breakpoint de troca da navegação em si
+     (Figma: "Desktop Navigation — usada de desktop amplo até tablet (768px+)" / "Mobile
+     Navigation — <768px"). */
+  .navInner {
+    width: calc(100% - 64px);
+    padding-block: 18px;
+  }
+  .mainInner {
+    width: calc(100% - 64px);
+    padding-top: 40px;
+    padding-bottom: 64px;
+  }
+  .wordmark {
+    font-size: var(--text-h2-size);
+  }
+  .logoutButton {
+    min-width: var(--hit-target-desktop);
+    min-height: var(--hit-target-desktop);
+  }
+}
+
+@media (min-width: 1440px) {
+  /* ≥1440px: margem mínima 48px — mas como 1120 + 2×48 = 1216 < a maioria dos viewports reais
+     nessa faixa, o max-width de 1120px é quem passa a limitar primeiro, e margin-inline:auto
+     centraliza o excedente (ex.: em 1440px a margem efetiva fica em 160px, não 48px — 1120px
+     de conteúdo útil é o que o Foundations documenta, a margem é consequência, não o alvo). */
+  .navInner {
+    width: calc(100% - 96px);
+  }
+  .mainInner {
+    width: calc(100% - 96px);
+  }
+}

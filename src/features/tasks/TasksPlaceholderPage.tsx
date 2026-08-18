@@ -1,26 +1,14 @@
-import { useAuth } from '../../auth/useAuth'
-import { Button } from '../../components/Button/Button'
 import styles from './TasksPlaceholderPage.module.css'
 
+// O landmark <main> já vem do AppShell — esta página só entrega o conteúdo da rota.
 export function TasksPlaceholderPage() {
-  const { logout } = useAuth()
-
   return (
-    <main className={styles.page}>
-      <div className={styles.banner}>
-        <h1 className="text-h1">Autenticado</h1>
-        <p className="text-body">
-          Sessão ativa. O painel de tarefas ainda não foi implementado — chega em uma próxima fase.
-        </p>
-        <Button
-          variant="secondary"
-          onClick={() => {
-            void logout()
-          }}
-        >
-          Sair
-        </Button>
-      </div>
-    </main>
+    <div className={styles.page}>
+      <h1 className="text-h1">Tarefas</h1>
+      <p className="text-body">
+        O painel de tarefas será construído em uma próxima fase. Por enquanto, esta tela só confirma
+        que a sessão está ativa dentro do shell autenticado.
+      </p>
+    </div>
   )
 }

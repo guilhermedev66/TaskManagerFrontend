@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { LoginPage } from '../features/auth/LoginPage'
 import { RegisterPage } from '../features/auth/RegisterPage'
 import { TasksPlaceholderPage } from '../features/tasks/TasksPlaceholderPage'
+import { AppShell } from './layout/AppShell'
 import { ProtectedRoute } from './routes/ProtectedRoute'
 import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
 
@@ -14,7 +15,9 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="/tasks" element={<TasksPlaceholderPage />} />
+          <Route element={<AppShell />}>
+            <Route path="/tasks" element={<TasksPlaceholderPage />} />
+          </Route>
         </Route>
         <Route path="/" element={<Navigate to="/tasks" replace />} />
         {/* Fallback seguro: qualquer rota desconhecida cai em /tasks, que por sua vez redireciona
