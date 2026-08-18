@@ -1,0 +1,125 @@
+/**
+ * Design tokens extraídos de 00 — Foundations (node-id=9-11) e 01 — Components (node-id=16-2)
+ * do arquivo Figma "TaskManagerAPI — Frontend". Valores lidos diretamente do arquivo, não
+ * aproximados. Ver auditoria completa na entrega da Fase 2.
+ */
+
+:root {
+  /* ── Cor — 19 tokens semânticos (tabela de contraste de 00 — Foundations) ── */
+  --color-background: #f7f5f0;
+  --color-surface: #ffffff;
+  --color-text-primary: #1f1b16;
+  --color-text-secondary: #6b6255;
+  --color-text-muted: #8b8171; /* restrito: decorativo/disabled — nunca conteúdo real */
+  --color-border: rgba(31, 27, 22, 0.08); /* ink 8% */
+  --color-border-strong: #8c8171;
+  --color-primary: #2d5f5b;
+  --color-on-primary: #ffffff;
+  --color-primary-hover: #234a47;
+  --color-primary-active: #1a3937;
+  --color-focus: #2d5f5b;
+  --color-success: #3f7a52;
+  --color-warning: #a17423; /* nunca como texto pequeno colorido */
+  --color-danger: #b23b3b;
+  --color-priority-low: #5b7b62;
+  --color-priority-medium: #a17423; /* mesmo valor de warning — tokens semânticos distintos */
+  --color-priority-high: #b23b3b; /* mesmo valor de danger — tokens semânticos distintos */
+  --color-disabled: #b4ac9e;
+
+  /* ── Cor — encontrados nos componentes reais, fora da tabela de 19 (divergência registrada) ── */
+  --color-field-background: #f1eee8; /* fill de Input/PasswordField/Textarea/Select, desktop e mobile */
+  --color-field-background-disabled: #f6f4f0;
+  --color-secondary-hover: #f5f2eb; /* Button/secondary hover */
+  --color-secondary-active: #f0ede3; /* Button/secondary active */
+  --color-danger-hover: #942e2e; /* Button/danger-solid hover */
+  --color-danger-ghost-hover: #faeded; /* Button/danger-ghost hover, fundo tintado */
+  --color-border-hairline: rgba(31, 27, 22, 0.1); /* "default" border — header/nav */
+
+  /* ── Tipografia — famílias ── */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* ── Tipografia — escala (tamanho / line-height, ambos em rem a partir de 16px raiz) ── */
+  --text-display-size: 2rem; /* 32px */
+  --text-display-line: 1.2;
+  --text-h1-size: 1.5rem; /* 24px */
+  --text-h1-line: 1.25;
+  --text-h2-size: 1.125rem; /* 18px */
+  --text-h2-line: 1.3;
+  --text-body-strong-size: 0.9375rem; /* 15px */
+  --text-body-strong-line: 1.45;
+  --text-body-size: 0.875rem; /* 14px */
+  --text-body-line: 1.5;
+  --text-label-size: 0.75rem; /* 12px */
+  --text-label-line: 1.4;
+  --text-label-tracking: 0.04em;
+  --text-helper-size: 0.75rem; /* 12px */
+  --text-helper-line: 1.5;
+  --text-meta-size: 0.75rem; /* 12px */
+  --text-meta-line: 1.35;
+  --text-meta-tracking: 0.04em;
+
+  /* ── Pesos ── */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* ── Espaçamento — escala base 4px ── */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem; /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem; /* 16px */
+  --space-5: 1.25rem; /* 20px */
+  --space-6: 1.5rem; /* 24px */
+  --space-8: 2rem; /* 32px */
+  --space-10: 2.5rem; /* 40px */
+  --space-12: 3rem; /* 48px */
+  --space-16: 4rem; /* 64px */
+
+  /* ── Raios ── */
+  --radius-small: 4px; /* input, botão, pill */
+  --radius-medium: 6px; /* card, container de lista */
+  --radius-large: 10px; /* modal, drawer */
+  --radius-full: 999px; /* badge, avatar */
+
+  /* ── Bordas ── */
+  --border-width-default: 1px;
+  --border-width-focus: 2px;
+
+  /* ── Foco ── */
+  --focus-ring-color: var(--color-focus);
+  --focus-ring-width: 2px;
+  --focus-ring-halo-color: #ffffff;
+  --focus-ring-halo-width: 2px;
+
+  /* ── Sombra — só onde necessária (dropdown/menu/tooltip); listas e cards ficam planos ── */
+  --shadow-elevated:
+    0 0 0 1px rgba(31, 27, 22, 0.06), 0 1px 2px -1px rgba(31, 27, 22, 0.06),
+    0 2px 4px rgba(31, 27, 22, 0.04);
+
+  /* ── Layout ── */
+  --content-max-width: 1120px;
+
+  /* ── Alturas de campo ── */
+  --field-height-desktop: 38px;
+  --field-height-mobile: 44px;
+  --touch-target-mobile: 44px;
+  --hit-target-desktop: 36px;
+
+  /* ── Motion (ver globals.css para prefers-reduced-motion) ── */
+  --easing-standard: cubic-bezier(0.23, 1, 0.32, 1);
+  --duration-state-update: 140ms;
+  --duration-feedback-in: 200ms;
+  --duration-feedback-out: 150ms;
+}
+
+/**
+ * Breakpoints — documentados aqui como referência (custom properties não funcionam dentro de
+ * @media), usar os valores literais abaixo em media queries:
+ *   mobile estreito   320–389px   margem 16px
+ *   mobile comum      390–767px   margem 20px
+ *   tablet             768–1023px margem 32px
+ *   notebook          1024–1439px margem 32px
+ *   desktop amplo      ≥1440px    margem 48px, conteúdo máximo 1120px centralizado
+ */

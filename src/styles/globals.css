@@ -1,0 +1,24 @@
+body {
+  font-family: var(--font-body);
+  color: var(--color-text-primary);
+  background: var(--color-background);
+}
+
+/* Anel de foco compartilhado — halo branco 2px + anel --color-focus 2px, nunca o outline padrão do navegador */
+:where(button, input, select, textarea):focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 var(--focus-ring-halo-width) var(--focus-ring-halo-color),
+    0 0 0 calc(var(--focus-ring-halo-width) + var(--focus-ring-width)) var(--focus-ring-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

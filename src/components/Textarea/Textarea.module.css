@@ -1,0 +1,27 @@
+.textarea {
+  width: 100%;
+  min-height: 108px; /* padding 10+10 + 88px de conteúdo, conforme node 18-51 do Figma */
+  padding: 10px 14px;
+  border-radius: var(--radius-small);
+  border: var(--border-width-default) solid var(--color-border-strong);
+  background: var(--color-field-background);
+  font-family: var(--font-body);
+  font-size: var(--text-body-size);
+  color: var(--color-text-primary);
+  resize: vertical;
+}
+
+.textarea::placeholder {
+  color: var(--color-text-secondary);
+}
+
+.textarea:disabled {
+  background: var(--color-field-background-disabled);
+  border-color: var(--color-disabled);
+  color: var(--color-disabled);
+  cursor: not-allowed;
+}
+
+.textarea[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}

@@ -1,0 +1,114 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: 40px;
+  padding: 10px 18px;
+  border-radius: var(--radius-small);
+  border: var(--border-width-default) solid transparent;
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: 0.8125rem; /* 13px */
+  cursor: pointer;
+  transition:
+    background-color 100ms ease-out,
+    border-color 100ms ease-out;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.hiddenLabel {
+  visibility: hidden;
+}
+
+.spinner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid currentcolor;
+  border-top-color: transparent;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* primary */
+.primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+.primary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+.primary:active:not(:disabled) {
+  background: var(--color-primary-active);
+}
+.primary:disabled {
+  background: var(--color-disabled);
+}
+
+/* secondary */
+.secondary {
+  background: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text-primary);
+}
+.secondary:hover:not(:disabled) {
+  background: var(--color-secondary-hover);
+}
+.secondary:active:not(:disabled) {
+  background: var(--color-secondary-active);
+}
+.secondary:disabled {
+  border-color: var(--color-disabled);
+  color: var(--color-disabled);
+}
+
+/* danger-solid */
+.dangerSolid {
+  background: var(--color-danger);
+  color: var(--color-on-primary);
+}
+.dangerSolid:hover:not(:disabled) {
+  background: var(--color-danger-hover);
+}
+.dangerSolid:disabled {
+  background: var(--color-disabled);
+}
+
+/* danger-ghost */
+.dangerGhost {
+  background: var(--color-surface);
+  border-color: var(--color-danger);
+  color: var(--color-danger);
+}
+.dangerGhost:hover:not(:disabled) {
+  background: var(--color-danger-ghost-hover);
+}
+.dangerGhost:disabled {
+  border-color: var(--color-disabled);
+  color: var(--color-disabled);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner::after {
+    animation: none;
+  }
+}

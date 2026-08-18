@@ -1,0 +1,70 @@
+/**
+ * Classes utilitárias de tipografia — espelham a escala de 00 — Foundations (node-id=9-11).
+ * Fraunces só em display/h1/h2. IBM Plex Mono só em meta. Nunca o contrário.
+ */
+
+.text-display {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-display-size);
+  line-height: var(--text-display-line);
+  color: var(--color-text-primary);
+}
+
+.text-h1 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h1-size);
+  line-height: var(--text-h1-line);
+  color: var(--color-text-primary);
+}
+
+.text-h2 {
+  font-family: var(--font-display);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-h2-size);
+  line-height: var(--text-h2-line);
+  color: var(--color-text-primary);
+}
+
+.text-body-strong {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body-strong-size);
+  line-height: var(--text-body-strong-line);
+  color: var(--color-text-primary);
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-body-size);
+  line-height: var(--text-body-line);
+  color: var(--color-text-primary);
+}
+
+.text-label {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-label-size);
+  line-height: var(--text-label-line);
+  letter-spacing: var(--text-label-tracking);
+  color: var(--color-text-primary);
+}
+
+.text-helper {
+  font-family: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-helper-size);
+  line-height: var(--text-helper-line);
+  color: var(--color-text-secondary);
+}
+
+.text-meta {
+  font-family: var(--font-mono);
+  font-weight: var(--font-weight-regular);
+  font-size: var(--text-meta-size);
+  line-height: var(--text-meta-line);
+  letter-spacing: var(--text-meta-tracking);
+  color: var(--color-text-secondary);
+}
